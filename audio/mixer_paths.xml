@@ -815,15 +815,15 @@
 	</path>
 
 	<path name="camcorder-mic">
-		<path name="handset-mic" />
+		<path name="adc1" />
 	</path>
 
 	<path name="camcorder-mic-bf">
 		<ctl name="MI2S_TX Channels" value="Two" />
-		<ctl name="ADC1 Volume" value="6" />
-		<ctl name="ADC3 Volume" value="6" />
-		<ctl name="DEC1 MUX" value="ADC1" />
-		<ctl name="DEC2 MUX" value="ADC2" />
+		<ctl name="ADC1 Volume" value="4" />
+		<ctl name="ADC3 Volume" value="4" />
+		<ctl name="DEC1 MUX" value="ADC2" />
+		<ctl name="DEC2 MUX" value="ADC1" />
 		<ctl name="ADC2 MUX" value="INP3" />
 	</path>
 
