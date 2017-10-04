@@ -20,7 +20,7 @@ import android.os.Bundle;
 
 import com.android.settingslib.drawer.SettingsDrawerActivity;
 
-public class TouchscreenGesturePreferenceActivity extends SettingsDrawerActivity {
+public class TouchscreenGestureSettings extends SettingsDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

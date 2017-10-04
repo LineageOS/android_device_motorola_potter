@@ -25,7 +25,7 @@ import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
 import android.view.MenuItem;
 
-public class DozePreferenceActivity extends PreferenceActivity {
+public class DozeSettings extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
