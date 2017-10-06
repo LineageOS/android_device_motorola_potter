@@ -58,6 +58,8 @@ public class Constants {
     public static final int ACTION_FLASHLIGHT = 110;
     public static final int ACTION_CAMERA = 111;
     public static final int ACTION_SCREENSHOT = 112;
+    public static final int ACTION_ONE_HAND_LEFT = 114;
+    public static final int ACTION_ONE_HAND_RIGHT = 115;
     public static final int ACTION_BROWSER = 116;
     public static final int ACTION_DIALER = 117;
     public static final int ACTION_EMAIL = 118;
@@ -75,7 +77,9 @@ public class Constants {
             ACTION_NEXT_TRACK,
             ACTION_FLASHLIGHT,
             ACTION_CAMERA,
-            ACTION_SCREENSHOT
+            ACTION_SCREENSHOT,
+            ACTION_ONE_HAND_LEFT,
+            ACTION_ONE_HAND_RIGHT
     };
     public static final int[] sFPSupportedActionsScreenOff = new int[]{
             ACTION_POWER,

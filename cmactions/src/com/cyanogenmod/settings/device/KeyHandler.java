@@ -58,6 +58,7 @@ import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -548,6 +549,14 @@ public class KeyHandler implements DeviceKeyHandler {
             case ACTION_SCREENSHOT:
                 triggerVirtualKeypress(mHandler, KeyEvent.KEYCODE_SYSRQ);
                 break;
+            case ACTION_ONE_HAND_LEFT:
+                toggleOneHandedMode(mContext, "left");
+                doHapticFeedbackFP(false);
+                break;
+            case ACTION_ONE_HAND_RIGHT:
+                toggleOneHandedMode(mContext, "right");
+                doHapticFeedbackFP(false);
+                break;
         }
         if (isHapticFeedbackEnabledOnFP && action != ACTION_VOICE_ASSISTANT && action != ACTION_CAMERA && action != ACTION_FLASHLIGHT){ // prevent double vibration
             doHapticFeedbackFP(false);
@@ -612,6 +621,15 @@ public class KeyHandler implements DeviceKeyHandler {
             } catch (RemoteException e) {
             }
         }
+    }
+
+    private static void toggleOneHandedMode(Context context, String direction) {
+        String str = Settings.Global.getString(context.getContentResolver(), Settings.Global.SINGLE_HAND_MODE);
+
+        if (TextUtils.isEmpty(str))
+            Settings.Global.putString(context.getContentResolver(), Settings.Global.SINGLE_HAND_MODE, direction);
+        else
+            Settings.Global.putString(context.getContentResolver(), Settings.Global.SINGLE_HAND_MODE, "");
     }
 
     private int str2int(String str){

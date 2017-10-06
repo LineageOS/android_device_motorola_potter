@@ -67,6 +67,8 @@
     <string name="action_dialer">Open dialer</string>
     <string name="action_email">Open email app</string>
     <string name="action_messages">Open messages app</string>
+    <string name="action_one_hand_left">One hand mode (left)</string>
+    <string name="action_one_hand_right">One hand mode (right)</string>
 
     <!-- Screen off gestures -->
     <string name="screen_off_gestures_title">Screen off gestures</string>
