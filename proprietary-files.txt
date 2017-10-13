@@ -160,7 +160,7 @@ lib/libYuvSkia.so
 -priv-app/atfwd/atfwd.apk
 -priv-app/CNEService/CNEService.apk
 -priv-app/com.qualcomm.location/com.qualcomm.location.apk
--priv-app/DTVPlayer/DTVPlayer.apk|5acaeb4152e8285e4cf9ab46d3ca67207472385d
+-priv-app/DTVPlayer/DTVPlayer.apk|de470ab2bef4948feb331524e21fead680b67aba
 -priv-app/DTVService/DTVService.apk
 -priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
 -priv-app/QtiTetherService/QtiTetherService.apk
