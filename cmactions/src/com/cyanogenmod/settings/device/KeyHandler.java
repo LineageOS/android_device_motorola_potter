@@ -16,6 +16,7 @@
 
 package com.cyanogenmod.settings.device;
 
+import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.ISearchManager;
 import android.app.KeyguardManager;
@@ -202,6 +203,40 @@ public class KeyHandler implements DeviceKeyHandler {
             Settings.Global.putString(context.getContentResolver(), Settings.Global.SINGLE_HAND_MODE, direction);
         else
             Settings.Global.putString(context.getContentResolver(), Settings.Global.SINGLE_HAND_MODE, "");
+    }
+
+    private static void switchToLastApp(Context context) {
+        final ActivityManager am =
+                (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.RunningTaskInfo lastTask = getLastTask(context, am);
+
+        if (lastTask != null) {
+            am.moveTaskToFront(lastTask.id, ActivityManager.MOVE_TASK_NO_USER_ACTION);
+        }
+    }
+
+    private static ActivityManager.RunningTaskInfo getLastTask(Context context,
+                                                               final ActivityManager am) {
+        final String defaultHomePackage = resolveCurrentLauncherPackage(context);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(5);
+
+        for (int i = 1; i < tasks.size(); i++) {
+            String packageName = tasks.get(i).topActivity.getPackageName();
+            if (!packageName.equals(defaultHomePackage)
+                    && !packageName.equals(context.getPackageName())
+                    && !packageName.equals("com.android.systemui")) {
+                return tasks.get(i);
+            }
+        }
+        return null;
+    }
+
+    private static String resolveCurrentLauncherPackage(Context context) {
+        final Intent launcherIntent = new Intent(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_HOME);
+        final PackageManager pm = context.getPackageManager();
+        final ResolveInfo launcherInfo = pm.resolveActivity(launcherIntent, 0);
+        return launcherInfo.activityInfo.packageName;
     }
 
     private void setHapticFeedbackEnabledOnSystem(boolean enabled) {
@@ -554,6 +589,11 @@ public class KeyHandler implements DeviceKeyHandler {
             case ACTION_ONE_HAND_RIGHT:
                 toggleOneHandedMode(mContext, "right");
                 doHapticFeedbackFP(false);
+                break;
+            case ACTION_LAST_APP:
+                if (!mKeyguardManager.inKeyguardRestrictedInputMode()) {
+                    switchToLastApp(mContext);
+                }
                 break;
         }
         if (isHapticFeedbackEnabledOnFP && action != ACTION_VOICE_ASSISTANT && action != ACTION_CAMERA && action != ACTION_FLASHLIGHT && action != ACTION_POWER) { // prevent double vibration

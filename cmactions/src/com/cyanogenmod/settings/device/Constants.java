@@ -64,6 +64,7 @@ public class Constants {
     public static final int ACTION_DIALER = 117;
     public static final int ACTION_EMAIL = 118;
     public static final int ACTION_MESSAGES = 119;
+    public static final int ACTION_LAST_APP = 121;
     public static final int[] sFPSupportedActions = new int[]{
             ACTION_HOME,
             ACTION_POWER,
@@ -79,7 +80,8 @@ public class Constants {
             ACTION_CAMERA,
             ACTION_SCREENSHOT,
             ACTION_ONE_HAND_LEFT,
-            ACTION_ONE_HAND_RIGHT
+            ACTION_ONE_HAND_RIGHT,
+            ACTION_LAST_APP
     };
     public static final int[] sFPSupportedActionsScreenOff = new int[]{
             ACTION_POWER,
