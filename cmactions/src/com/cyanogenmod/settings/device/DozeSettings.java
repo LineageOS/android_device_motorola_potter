@@ -19,47 +19,39 @@ package com.cyanogenmod.settings.device;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.provider.Settings;
-import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceCategory;
-import android.support.v14.preference.PreferenceFragment;
-import android.support.v14.preference.SwitchPreference;
+import android.preference.Preference;
+import android.preference.PreferenceCategory;
+import android.preference.SwitchPreference;
 import android.view.MenuItem;
 
 public class DozeSettings extends PreferenceActivity {
 
+
+    private static final String KEY_AMBIENT_DISPLAY_ENABLE = "doze_enabled";
+
+    private SwitchPreference mAmbientDisplayPreference;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.doze_panel);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new DozePreferenceFragment()).commit();
+        boolean dozeEnabled = CMActionsSettings.isDozeEnabled(getContentResolver());
+        mAmbientDisplayPreference = (SwitchPreference) findPreference(KEY_AMBIENT_DISPLAY_ENABLE);
+        // Read from DOZE_ENABLED secure setting
+        mAmbientDisplayPreference.setChecked(dozeEnabled);
+        mAmbientDisplayPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                boolean enable = (boolean) newValue;
+                return enableDoze(enable);
+            }
+        });
     }
 
-    public class DozePreferenceFragment extends PreferenceFragment {
-        private static final String KEY_AMBIENT_DISPLAY_ENABLE = "doze_enabled";
-
-        private SwitchPreference mAmbientDisplayPreference;
-
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            addPreferencesFromResource(R.xml.doze_panel);
-            boolean dozeEnabled = CMActionsSettings.isDozeEnabled(getActivity().getContentResolver());
-            mAmbientDisplayPreference = (SwitchPreference) findPreference(KEY_AMBIENT_DISPLAY_ENABLE);
-            // Read from DOZE_ENABLED secure setting
-            mAmbientDisplayPreference.setChecked(dozeEnabled);
-            mAmbientDisplayPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    boolean enable = (boolean) newValue;
-                    return enableDoze(enable);
-                }
-            });
-        }
-
-        private boolean enableDoze(boolean enable) {
-            return Settings.Secure.putInt(getContext().getContentResolver(),
-                    Settings.Secure.DOZE_ENABLED, enable ? 1 : 0);
-        }
+    private boolean enableDoze(boolean enable) {
+        return Settings.Secure.putInt(getContentResolver(),
+                Settings.Secure.DOZE_ENABLED, enable ? 1 : 0);
     }
 
     @Override

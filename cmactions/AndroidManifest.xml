@@ -8,12 +8,14 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <application
         android:allowBackup="true"
-        android:label="@string/device_settings_app_name"
+        android:label="@string/moto_actions_title"
+        android:icon="@drawable/ic_gesture"
         android:persistent="true">
 
         <receiver android:name="com.cyanogenmod.settings.device.BootCompletedReceiver">
@@ -42,7 +44,7 @@
         <activity
             android:name=".TouchscreenGestureSettings"
             android:label="@string/moto_actions_title"
-            android:summary="@string/moto_actions_summary"
+            android:summary="@string/device_gestures_summary"
             android:theme="@style/CMActions">
             <intent-filter>
                 <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
@@ -55,7 +57,25 @@
                 android:resource="@drawable/ic_settings_gestures" />
             <meta-data
                 android:name="com.android.settings.summary"
-                android:resource="@string/moto_actions_summary" />
+                android:resource="@string/device_gestures_summary" />
+        </activity>
+
+        <activity
+            android:name=".GestureSettings"
+            android:label="@string/device_gestures_title"
+            android:theme="@style/CMActions">
+        </activity>
+
+        <activity
+            android:name=".FPGestureSettings"
+            android:label="@string/fingerprint_gestures_title"
+            android:theme="@style/CMActions">
+        </activity>
+
+        <activity
+            android:name=".ScreenOffGestureSettings"
+            android:label="@string/screen_off_gestures_title"
+            android:theme="@style/CMActions">
         </activity>
 
     </application>

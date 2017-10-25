@@ -17,7 +17,6 @@
 package com.cyanogenmod.settings.device;
 
 import android.os.Bundle;
-
 import com.android.settingslib.drawer.SettingsDrawerActivity;
 
 public class TouchscreenGestureSettings extends SettingsDrawerActivity {
