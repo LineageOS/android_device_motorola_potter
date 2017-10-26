@@ -40,7 +40,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         Log.i(TAG, "Booting");
 
         // Restore nodes to saved preference values
-        for (String pref : Constants.sButtonPrefKeys) {
+        for (String pref : Constants.sPrefKeys) {
              Constants.writePreference(context, pref);
         }
 
