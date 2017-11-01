@@ -109,6 +109,7 @@ public class KeyHandler implements DeviceKeyHandler {
     private int fpTapCounts = 0;
     private boolean fpTapPending = false;
     private boolean screenOffGesturePending = false;
+    private boolean fpGesturePending = false;
     private SettingsObserver mSettingsObserver;
     private Runnable doubleTapRunnable = new Runnable() {
         public void run() {
@@ -133,6 +134,11 @@ public class KeyHandler implements DeviceKeyHandler {
     private Runnable screenOffGestureRunnable = new Runnable() {
         public void run() {
             resetScreenOffGestureDelay();
+        }
+    };
+    private Runnable fpGestureRunnable = new Runnable() {
+        public void run() {
+            resetFPGestureDelay();
         }
     };
 
@@ -474,6 +480,16 @@ public class KeyHandler implements DeviceKeyHandler {
         if (event.getAction() != KeyEvent.ACTION_UP) {
             return true;
         }
+        
+        if (isFPScanCode){
+            if (fpGesturePending) {
+                return false;
+            } else {
+                resetFPGestureDelay();
+                fpGesturePending = true;
+                mHandler.postDelayed(fpGestureRunnable, 10);
+            }
+        }
 
         if (scanCode != FP_TAP_SCANCODE) {
             resetDoubleTapOnFP();
@@ -711,6 +727,11 @@ public class KeyHandler implements DeviceKeyHandler {
     private void resetScreenOffGestureDelay() {
         screenOffGesturePending = false;
         mHandler.removeCallbacks(screenOffGestureRunnable);
+    }
+
+    private void resetFPGestureDelay() {
+        fpGesturePending = false;
+        mHandler.removeCallbacks(fpGestureRunnable);
     }
 
     private void processScreenOffScancode(int scanCode) {
