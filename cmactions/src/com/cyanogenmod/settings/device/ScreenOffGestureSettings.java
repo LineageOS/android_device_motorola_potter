@@ -24,12 +24,14 @@ import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
 import static android.provider.Settings.Secure.DOUBLE_TAP_TO_WAKE;
+import static com.cyanogenmod.settings.device.Constants.KEY_GESTURE_ENABLE_HAPTIC_FEEDBACK;
+import static com.cyanogenmod.settings.device.Constants.KEY_GESTURE_ENABLE_PROXIMITY_SENSOR;
 
 public class ScreenOffGestureSettings extends PreferenceActivity {
 
     private SwitchPreference mTapToWake;
     private SwitchPreference mHapticFeedback;
-    private String KEY_GESTURE_ENABLE_HAPTIC_FEEDBACK = "screen_off_gesture_haptic_feedback";
+    private SwitchPreference mProximitySensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,17 @@ public class ScreenOffGestureSettings extends PreferenceActivity {
             public boolean onPreferenceChange(Preference preference, Object objValue) {
                 boolean value = (Boolean) objValue;
                 Settings.System.putInt(getContentResolver(), KEY_GESTURE_ENABLE_HAPTIC_FEEDBACK, value ? 1 : 0);
+                return true;
+            }
+        });
+
+        mProximitySensor = (SwitchPreference) findPreference("proximity_sensor");
+        mProximitySensor.setChecked(Settings.System.getInt(getContentResolver(), KEY_GESTURE_ENABLE_PROXIMITY_SENSOR, 1) == 1);
+        mProximitySensor.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object objValue) {
+                boolean value = (Boolean) objValue;
+                Settings.System.putInt(getContentResolver(), KEY_GESTURE_ENABLE_PROXIMITY_SENSOR, value ? 1 : 0);
                 return true;
             }
         });
